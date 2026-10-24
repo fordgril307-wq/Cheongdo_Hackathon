@@ -1,0 +1,15 @@
+{
+  "name": "hyodo-taxi",
+  "image": "mcr.microsoft.com/devcontainers/javascript-node:1-20-bookworm",
+  "features": {
+    "ghcr.io/devcontainers/features/azure-cli:1": { "installBicep": true },
+    "ghcr.io/devcontainers/features/github-cli:1": {}
+  },
+  "postCreateCommand": "npm install --prefix api",
+  "forwardPorts": [4280],
+  "customizations": {
+    "vscode": {
+      "extensions": ["GitHub.copilot", "ms-azuretools.vscode-azurestaticwebapps", "ms-azuretools.vscode-bicep"]
+    }
+  }
+}

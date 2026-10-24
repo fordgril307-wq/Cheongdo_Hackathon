@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>청도효도택시 — 이웃과 한 차로 모셔요</title>
+  <meta name="description" content="청도 어르신의 사투리 예약을 AI가 이해하고, 같은 날·같은 병원 가는 분들을 한 차로 묶어 드립니다." />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2040%2040%22%3E%3Crect%20width%3D%2240%22%20height%3D%2240%22%20rx%3D%2212%22%20fill%3D%22%230052CC%22/%3E%3Cg%20transform%3D%22translate%284%203.6%29%20scale%281.333%29%22%3E%3Crect%20x%3D%229.6%22%20y%3D%222.2%22%20width%3D%224.8%22%20height%3D%222.1%22%20rx%3D%221%22%20fill%3D%22%23FFFFFF%22/%3E%3Cpath%20d%3D%22M4%2011%207.1%205.6Q7.6%204.8%208.5%204.8h7q.9%200%201.4.8L20%2011q1.6.1%201.6%201.7V17q0%201-1%201H3.4q-1%200-1-1v-4.3Q2.4%2011.1%204%2011Z%22%20fill%3D%22%23FFFFFF%22/%3E%3Cpath%20d%3D%22M12%2011.2C9.7%209.7%208.7%208.6%208.7%207.4c0-.9.7-1.6%201.6-1.6.7%200%201.3.4%201.7%201%20.4-.6%201-1%201.7-1%20.9%200%201.6.7%201.6%201.6%200%201.2-1%202.3-3.3%203.8Z%22%20fill%3D%22%230052CC%22%20transform%3D%22translate%2812%208.9%29%20scale%281.25%20-1.25%29%20translate%28-12%20-8.5%29%22/%3E%3Crect%20x%3D%224.3%22%20y%3D%2217%22%20width%3D%223.4%22%20height%3D%223%22%20rx%3D%221.2%22%20fill%3D%22%23FFFFFF%22/%3E%3Crect%20x%3D%2216.3%22%20y%3D%2217%22%20width%3D%223.4%22%20height%3D%223%22%20rx%3D%221.2%22%20fill%3D%22%23FFFFFF%22/%3E%3C/g%3E%3C/svg%3E" />
+  <link rel="stylesheet" href="vendor/leaflet/leaflet.css" />
+  <link rel="stylesheet" href="app.css" />
+</head>
+<body>
+  <header class="top">
+    <div class="brand">
+      <svg class="logo" viewBox="0 0 40 40" width="40" height="40" aria-hidden="true"><rect width="40" height="40" rx="12" fill="var(--orange)"/><g transform="translate(4 3.6) scale(1.333)"><rect x="9.6" y="2.2" width="4.8" height="2.1" rx="1" fill="var(--on-primary)"/><path d="M4 11 7.1 5.6Q7.6 4.8 8.5 4.8h7q.9 0 1.4.8L20 11q1.6.1 1.6 1.7V17q0 1-1 1H3.4q-1 0-1-1v-4.3Q2.4 11.1 4 11Z" fill="var(--on-primary)"/><path d="M12 11.2C9.7 9.7 8.7 8.6 8.7 7.4c0-.9.7-1.6 1.6-1.6.7 0 1.3.4 1.7 1 .4-.6 1-1 1.7-1 .9 0 1.6.7 1.6 1.6 0 1.2-1 2.3-3.3 3.8Z" fill="var(--orange)" transform="translate(12 8.9) scale(1.25 -1.25) translate(-12 -8.5)"/><rect x="4.3" y="17" width="3.4" height="3" rx="1.2" fill="var(--on-primary)"/><rect x="16.3" y="17" width="3.4" height="3" rx="1.2" fill="var(--on-primary)"/></g></svg>
+      <div class="brand-text">
+        <h1>청도효도택시</h1>
+        <p class="tag">이웃과 한 차로 모셔요</p>
+      </div>
+      <nav class="tabs" role="tablist" aria-label="화면 전환">
+        <button role="tab" class="tab active" data-tab="book" aria-selected="true">어르신</button>
+        <button role="tab" class="tab" data-tab="dash" aria-selected="false">담당자</button>
+      </nav>
+      <button id="darkmode" class="darkmode" type="button" aria-pressed="false" aria-label="화면 어둡게">어둡게</button>
+      <button id="bigtext" class="bigtext" type="button" aria-pressed="false" aria-label="글자 크게 보기">가<span>+</span></button>
+    </div>
+  </header>
+
+  <main>
+    <!-- ================= 어르신 화면: 한 화면에 한 질문 ================= -->
+    <section id="tab-book" class="panel active" role="tabpanel">
+
+      <!-- 단계 표시 -->
+      <ol class="steps" id="steps" aria-label="예약 단계">
+        <li data-step="where">어디로</li>
+        <li data-step="when">언제</li>
+        <li data-step="confirm">확인</li>
+        <li data-step="done">완료</li>
+      </ol>
+
+      <!-- 1. 어디로 -->
+      <div class="screen active" id="s-where">
+        <div class="hero" id="hero" aria-hidden="true"></div>
+        <div class="sheet">
+        <div class="grab" aria-hidden="true"></div>
+        <div class="mode" role="group" aria-label="누가 신청하나요">
+          <button type="button" class="mode-btn active" data-mode="self" aria-pressed="true">제가 탈게요</button>
+          <button type="button" class="mode-btn" data-mode="hall" aria-pressed="false">이장님·경로당이 대신</button>
+        </div>
+
+        <div id="self-box">
+          <p class="who"><select id="profile" aria-label="예약하실 어르신"></select></p>
+        </div>
+
+        <div id="hall-box" class="hidden">
+          <label class="hall-pick">
+            <span>경로당</span>
+            <select id="hall" aria-label="경로당 선택"></select>
+          </label>
+          <p class="hall-hint">같이 가실 어르신을 모두 고르세요</p>
+          <div class="roster" id="roster" role="group" aria-label="어르신 명단"></div>
+        </div>
+
+        <h2 class="ask" id="greet">어디 가세요?</h2>
+
+        <button id="mic" class="mic" type="button" aria-label="말로 예약하기">
+          <span class="mic-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="30" height="30"><path fill="currentColor" d="M12 15a3 3 0 0 0 3-3V6a3 3 0 1 0-6 0v6a3 3 0 0 0 3 3Zm5-3a5 5 0 0 1-10 0H5a7 7 0 0 0 6 6.92V21h2v-2.08A7 7 0 0 0 19 12h-2Z"/></svg>
+          </span>
+          <span class="mic-text"><b id="mic-label">말로 예약하기</b><small id="mic-sub">사투리 그대로 말씀하셔도 돼요</small></span>
+        </button>
+        <p class="heard hidden" id="heard" aria-live="polite"></p>
+
+        <div class="together hidden" id="together">
+          <p class="or">내일 같은 방향 가시는 이웃</p>
+          <div class="together-chips" id="together-chips"></div>
+        </div>
+
+        <p class="or">자주 가는 곳</p>
+        <div class="places" id="places"></div>
+
+        <details class="typed">
+          <summary>글로 적기</summary>
+          <textarea id="utter" rows="3" placeholder="예) 내일 아침 열 시까지 대구 효성병원 가야 되는데예"></textarea>
+          <div class="chips" id="examples"></div>
+          <button id="parse" class="primary" type="button">AI로 정리하기</button>
+        </details>
+
+        <a id="callcenter" class="call hidden" href="#">📞 전화로 예약하기</a>
+        </div>
+      </div>
+
+      <!-- 2. 언제 -->
+      <div class="screen" id="s-when">
+        <button class="back" type="button" data-go="where">← 이전</button>
+        <div class="dest-card" id="picked-dest"></div>
+        <h2 class="ask">언제 가세요?</h2>
+        <div class="seg" id="days" role="group" aria-label="날짜"></div>
+        <h3 class="sub">몇 시까지 도착하셔야 해요?</h3>
+        <p class="sub-hint">AI가 거꾸로 계산해서 타실 시각을 알려 드려요</p>
+        <div class="times" id="times" role="group" aria-label="도착 시각"></div>
+        <p class="clarify hidden" id="clarify" aria-live="polite"></p>
+      </div>
+
+      <!-- 3. 확인 -->
+      <div class="screen" id="s-confirm">
+        <button class="back" type="button" data-go="when">← 고칠게요</button>
+        <h2 class="ask">이렇게 예약할까요?</h2>
+        <div class="ticket" id="ticket"></div>
+        <p class="notice hidden" id="reg-notice"></p>
+        <button id="speak" class="listen" type="button">🔊 다시 듣기</button>
+        <label class="consent">
+          <input type="checkbox" id="consent" checked />
+          <span><b id="consent-title">같은 방향 어르신과 함께 탈게요</b><br />
+            <small>모르는 분과는 같은 성별끼리만 타고, 같이 신청한 이웃은 한 차로 모셔요. 함께 타는 분이 어디서 몇 시에 타는지, 내 자리가 어디인지 미리 알려 드려요.</small></span>
+        </label>
+        <p class="engine"><span class="badge" id="engine"></span></p>
+      </div>
+
+      <!-- 4. 완료 (배차 상태) -->
+      <div class="screen" id="s-done">
+        <div class="done-head">
+          <span class="check" aria-hidden="true">✓</span>
+          <h2 class="ask">예약됐어요</h2>
+        </div>
+        <div class="pickup" id="pickup"></div>
+        <div class="hall-list hidden" id="hall-list"></div>
+        <ol class="timeline" id="timeline"></ol>
+        <div class="actions">
+          <button id="share" class="share big" type="button">가족에게 알리기</button>
+          <button id="again" class="ghost big" type="button">다른 예약 하기</button>
+          <a class="sos big" href="tel:112">긴급신고 112</a>
+        </div>
+      </div>
+
+      <!-- 엄지 영역 고정 버튼 -->
+      <div class="cta-bar hidden" id="cta-bar">
+        <button id="cta" class="cta" type="button">다음</button>
+      </div>
+    </section>
+
+    <!-- ================= 배차 담당 화면 ================= -->
+    <section id="tab-dash" class="panel" role="tabpanel">
+      <div class="metrics" id="metrics">
+        <div class="metric"><b id="m-req">0</b><span>예약</span></div>
+        <div class="metric"><b id="m-trips">–</b><span>운행 횟수</span></div>
+        <div class="metric hl"><b id="m-km">–</b><span>주행거리 절감</span></div>
+        <div class="metric"><b id="m-fill">–</b><span>좌석 채움</span></div>
+      </div>
+      <div class="compare" id="compare"></div>
+
+      <div class="card controls">
+        <label class="field inline">
+          <span>승합차 투입(제안)</span>
+          <select id="vans">
+            <option value="0" selected>0대</option>
+            <option value="1">1대</option>
+            <option value="2">2대</option>
+          </select>
+        </label>
+        <button id="match" class="primary" type="button">AI 합승 배차</button>
+        <button id="load-demo" class="ghost" type="button">샘플 예약 12건</button>
+        <button id="clear" class="ghost" type="button">비우기</button>
+      </div>
+
+      <div id="map" class="map" aria-label="배차 지도"></div>
+      <div id="vehicles" class="vehicles"></div>
+
+      <details class="card" open>
+        <summary>들어온 예약 <span id="req-count">0</span>건</summary>
+        <ul id="requests" class="requests"></ul>
+      </details>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <button type="button" class="staff-link" id="staff-link">배차 담당자 화면 보기 →</button>
+    <p>데모용 좌표·인물은 가상입니다. 합승 조건은 택시발전법 시행규칙(2022.6.15 시행)의 플랫폼 중개 합승 기준을 참고했으며, 실제 운영 전 관할관청 확인이 필요합니다.</p>
+  </footer>
+
+  <script src="config.js"></script>
+  <script src="vendor/leaflet/leaflet.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

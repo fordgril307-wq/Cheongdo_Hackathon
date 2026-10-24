@@ -1,0 +1,15 @@
+{
+  "name": "hyodo-taxi-api",
+  "version": "1.0.0",
+  "description": "청도효도택시 API — 사투리 예약 해석과 합승 배차",
+  "main": "src/functions/*.js",
+  "scripts": {
+    "test": "node --test ../tests/core.test.js"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "@azure/functions": "^4.5.0"
+  }
+}

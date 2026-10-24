@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 420" font-family="Pretendard, 'Noto Sans KR', sans-serif">
+  <rect width="960" height="420" fill="#F9F9F9"/>
+  <text x="32" y="44" font-size="22" font-weight="800" fill="#111111">청도효도택시 아키텍처</text>
+  <text x="32" y="70" font-size="14" fill="#5b6675">GitHub push → GitHub Actions(테스트·배포) → Azure Static Web Apps</text>
+
+  <!-- 사용자 -->
+  <rect x="32" y="120" width="170" height="96" rx="14" fill="#fff" stroke="#e7dfd3" stroke-width="2"/>
+  <text x="117" y="156" font-size="16" font-weight="800" text-anchor="middle" fill="#111111">어르신</text>
+  <text x="117" y="180" font-size="13" text-anchor="middle" fill="#5b6675">사투리 음성·글 예약</text>
+  <text x="117" y="198" font-size="13" text-anchor="middle" fill="#5b6675">(브라우저 음성 인식)</text>
+
+  <rect x="32" y="260" width="170" height="96" rx="14" fill="#fff" stroke="#e7dfd3" stroke-width="2"/>
+  <text x="117" y="296" font-size="16" font-weight="800" text-anchor="middle" fill="#111111">군·배차 담당</text>
+  <text x="117" y="320" font-size="13" text-anchor="middle" fill="#5b6675">합승 배차 대시보드</text>
+  <text x="117" y="338" font-size="13" text-anchor="middle" fill="#5b6675">기사 동선·좌석 안내</text>
+
+  <!-- SWA -->
+  <rect x="262" y="100" width="420" height="276" rx="18" fill="#fdecec" stroke="#E51A24" stroke-width="2"/>
+  <text x="472" y="130" font-size="16" font-weight="800" text-anchor="middle" fill="#E51A24">Azure Static Web Apps</text>
+
+  <rect x="286" y="148" width="180" height="200" rx="12" fill="#fff" stroke="#e7dfd3" stroke-width="2"/>
+  <text x="376" y="178" font-size="15" font-weight="800" text-anchor="middle" fill="#111111">웹 화면</text>
+  <text x="376" y="204" font-size="13" text-anchor="middle" fill="#5b6675">HTML·CSS·JS</text>
+  <text x="376" y="224" font-size="13" text-anchor="middle" fill="#5b6675">Leaflet 지도</text>
+  <text x="376" y="244" font-size="13" text-anchor="middle" fill="#5b6675">OpenStreetMap</text>
+
+  <rect x="482" y="148" width="180" height="200" rx="12" fill="#fff" stroke="#e7dfd3" stroke-width="2"/>
+  <text x="572" y="178" font-size="15" font-weight="800" text-anchor="middle" fill="#111111">Azure Functions</text>
+  <text x="572" y="204" font-size="13" text-anchor="middle" fill="#5b6675">/api/parse 사투리 해석</text>
+  <text x="572" y="224" font-size="13" text-anchor="middle" fill="#5b6675">/api/match 합승 배차</text>
+  <text x="572" y="244" font-size="13" text-anchor="middle" fill="#5b6675">/api/places · /api/demo</text>
+  <text x="572" y="280" font-size="12" text-anchor="middle" fill="#9a5b00">합법 합승 규칙 내장</text>
+  <text x="572" y="298" font-size="12" text-anchor="middle" fill="#9a5b00">동의·동성·좌석·112</text>
+
+  <!-- OpenAI -->
+  <rect x="742" y="120" width="186" height="96" rx="14" fill="#111111"/>
+  <text x="835" y="158" font-size="16" font-weight="800" text-anchor="middle" fill="#fff">Azure OpenAI</text>
+  <text x="835" y="182" font-size="13" text-anchor="middle" fill="#cbd5e1">GPT-4o · JSON 응답</text>
+  <text x="835" y="200" font-size="12" text-anchor="middle" fill="#cbd5e1">실패 시 규칙 기반 대체</text>
+
+  <rect x="742" y="260" width="186" height="96" rx="14" fill="#fff" stroke="#e7dfd3" stroke-width="2"/>
+  <text x="835" y="296" font-size="16" font-weight="800" text-anchor="middle" fill="#111111">공공데이터</text>
+  <text x="835" y="320" font-size="13" text-anchor="middle" fill="#5b6675">청도군 버스정류장</text>
+  <text x="835" y="338" font-size="13" text-anchor="middle" fill="#5b6675">병원·보건지소 위치</text>
+
+  <g stroke="#111111" stroke-width="2" fill="none" marker-end="url(#a)">
+    <path d="M202 168 H284"/>
+    <path d="M202 308 H284"/>
+    <path d="M466 248 H480"/>
+    <path d="M662 190 H740"/>
+    <path d="M662 300 H740"/>
+  </g>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0 0 L10 5 L0 10 z" fill="#111111"/>
+    </marker>
+  </defs>
+</svg>
