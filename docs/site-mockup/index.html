@@ -196,28 +196,31 @@ const VENUES = {
   DR:{name:"다로리 마을영화관",place:"화양읍 다로리 (2027 예정)",seats:"소규모",desc:"빈집재생 사업으로 2027년까지 조성. 심야 회고전 상설관으로 연결."}
 };
 const SECTIONS = ["개막작","모래판 경쟁","로컬시네마","사라진 극장들","심야상영","폐막작"];
-const DAYS = [{d:"11.10",w:"화"},{d:"11.11",w:"수"},{d:"11.12",w:"목"},{d:"11.13",w:"금"}];
+const DAYS = [{d:"11.10",w:"수"},{d:"11.11",w:"목"},{d:"11.12",w:"금"}];
 const PRICE = {일반:10000, 마스터클래스:15000, 심야:20000, "개·폐막":30000};
 // [code, dayIdx, time, venue, title, section, rating, sub, events[], priceType, runtime, filled%]
 const S = [
- ["101",0,"19:00","MR","[예시] 모래 위의 밤","개막작","⑫","K",["GV"],"개·폐막",108,92],
- ["102",0,"15:00","SM","[예시] 단편 경쟁 1 — 돌아오는 길","모래판 경쟁","⑮","E",["GV"],"일반",86,64],
- ["103",0,"17:00","TN","감와인 네트워킹 · 개막 리셉션","개막작","G","N",["교류"],"일반",60,48],
- ["201",1,"15:00","SM","마스터클래스: 지방에 극장이 사라질 때","사라진 극장들","G","K",["MC"],"마스터클래스",90,71],
- ["202",1,"19:00","MR","[예시] 반시가 익는 계절","로컬시네마","G","K",["GV"],"일반",97,58],
- ["203",1,"21:30","MR","[예시] 미드나잇 모래판","심야상영","⑲","KN",[],"심야",121,40],
- ["301",2,"15:00","SM","포럼: 평일 경기장, 극장이 되다","사라진 극장들","G","K",["포럼"],"일반",100,35],
- ["302",2,"19:00","MR","[예시] 단편 경쟁 2 — 오래된 터널","모래판 경쟁","⑮","KE",["GV"],"일반",92,77],
- ["303",2,"17:00","TN","터널 단편 상영 · 감와인 1잔","로컬시네마","G","N",["교류"],"일반",50,66],
- ["401",3,"15:00","SM","[예시] 유천극장 1967 (기록영화)","사라진 극장들","G","K",["CT"],"일반",72,52],
- ["402",3,"19:00","MR","[예시] 폐막작 · 관객상 시상","폐막작","⑫","K",["GV","시상"],"개·폐막",112,88],
+ ["101",0,"10:30","MR","[예시] 배리어프리: 감나무 아래","로컬시네마","G","K",[],"일반",80,30],
+ ["107",0,"13:30","SM","단편경쟁 1","모래판 경쟁","⑮","K",["GV"],"일반",86,64],
+ ["113",0,"16:00","TN","터널 단편 1 · 감와인","로컬시네마","G","N",["교류"],"일반",50,70],
+ ["104",0,"19:00","MR","개막식 · [예시] 개막작","개막작","⑫","K",["GV"],"개·폐막",108,92],
+ ["105",0,"21:40","MR","미드나잇 모래판 1","심야상영","⑲","KN",[],"심야",110,44],
+ ["208",1,"16:00","SM","마스터클래스: 작은 영화제 만들기","사라진 극장들","G","K",["MC"],"마스터클래스",90,71],
+ ["213",1,"16:00","TN","터널 단편 2 · 감와인","로컬시네마","G","N",["교류"],"일반",50,66],
+ ["204",1,"19:00","MR","[예시] 장편 초청 갈라","로컬시네마","⑫","K",["GV"],"일반",112,62],
+ ["205",1,"21:40","MR","미드나잇 모래판 2","심야상영","⑲","KN",[],"심야",104,40],
+ ["209",1,"19:00","SM","포럼: 평일 경기장, 극장이 되다","사라진 극장들","G","K",["포럼"],"일반",100,35],
+ ["307",2,"13:30","SM","로컬시네마: 청도 사람들","로컬시네마","G","K",["GV"],"일반",88,52],
+ ["303",2,"16:00","MR","단편경쟁 3","모래판 경쟁","⑮","K",["GV"],"일반",92,77],
+ ["313",2,"16:00","TN","관객상 투표 마감 · 감와인","로컬시네마","G","N",["교류"],"일반",60,58],
+ ["304",2,"19:00","MR","폐막식 · 관객상 · [예시] 폐막작","폐막작","⑫","K",["GV","시상"],"개·폐막",112,88],
 ];
 const EVENT_LABEL={GV:"GV 감독·배우와의 대화",MC:"마스터클래스",CT:"시네토크",포럼:"토크포럼",교류:"네트워킹",시상:"관객상 시상"};
 const SUB_LABEL={E:"영어자막",K:"한글자막",KE:"한글자막+영어대사",KN:"한글자막+비영어대사",N:"대사 없음"};
 const fmt=n=>n.toLocaleString("ko-KR")+"원";
 const byCode=c=>S.find(s=>s[0]===c);
 
-let state={day:0,venue:"all",section:"all",seatCode:"202",picked:[],tickets:[],votes:{},courseText:"금요일 퇴근하고 둘이 가요. 차는 없어요."};
+let state={day:0,venue:"all",section:"all",seatCode:"204",picked:[],tickets:[],votes:{},courseText:"금요일 퇴근하고 둘이 가요. 차는 없어요."};
 try{const t=JSON.parse(localStorage.getItem("cdct-tickets")||"null");if(Array.isArray(t))state.tickets=t;}catch(e){}
 try{const v=JSON.parse(localStorage.getItem("cdct-votes")||"null");if(v&&typeof v==="object")state.votes=v;}catch(e){}
 function save(){try{localStorage.setItem("cdct-tickets",JSON.stringify(state.tickets));localStorage.setItem("cdct-votes",JSON.stringify(state.votes));}catch(e){}}
@@ -232,7 +235,7 @@ function home(){
   app.innerHTML=`
   <section class="hero">
     <div class="txt">
-      <span class="eyebrow">제1회 청도 시네마 투어 · 예시 일정 11.10(화) – 11.13(금)</span>
+      <span class="eyebrow">제1회 청도 시네마 투어 · 예시 일정 11.10(수) – 11.12(금) · 3일 60회차</span>
       <h1>토요일엔 소싸움,<br>평일 밤엔 <em>모래판 극장</em></h1>
       <p>비어 있던 경기장 돔, 옛 버스터미널, 110년 된 기차 터널이 영화제 무대가 됩니다. 상영 좌석부터 와인터널·숙소·합승 택시까지 AI가 한 번에 묶어 예약합니다.</p>
       <div class="row"><a class="btn primary" href="#program">상영시간표 보기</a><a class="btn" href="#course">말로 코스 짜기</a></div>
@@ -348,8 +351,8 @@ function seats(){
 
 /* ---------- AI COURSE (규칙 기반 데모: 실제는 Azure OpenAI 함수 호출) ---------- */
 function parse(t){
-  const p={day:3,people:2,car:true,stay:false};
-  if(/화요일|화\b/.test(t))p.day=0;else if(/수요일/.test(t))p.day=1;else if(/목요일/.test(t))p.day=2;else if(/금요일/.test(t))p.day=3;
+  const p={day:2,people:2,car:true,stay:false};
+  if(/수요일/.test(t))p.day=0;else if(/목요일/.test(t))p.day=1;else if(/금요일/.test(t))p.day=2;
   const m=t.match(/(\d)\s*명/);if(m)p.people=+m[1];else if(/혼자/.test(t))p.people=1;else if(/둘|두 명|커플/.test(t))p.people=2;else if(/셋|세 명/.test(t))p.people=3;
   if(/차.{0,3}없|뚜벅|기차/.test(t))p.car=false;
   if(/1박|자고|숙박|하룻밤|주말까지|퇴근하고/.test(t))p.stay=true;
@@ -474,7 +477,7 @@ function admin(){
   <p class="lead">군·운영사가 보는 화면입니다. 숫자는 시안용 예시입니다.</p>
   <div class="kpis section" style="margin-top:16px">
     <div class="kpi"><b>${avg}%</b><span>평일 좌석 채움률 (전 회차 평균)</span></div>
-    <div class="kpi"><b>${S.length}</b><span>회차 (4일)</span></div>
+    <div class="kpi"><b>60</b><span>회차 (3일 · 4개 공간)</span></div>
     <div class="kpi"><b>${38+state.tickets.filter(t=>t.wine).length}</b><span>터널 '내 칸' 보관 · 1년 뒤 재방문 약속</span></div>
     <div class="kpi"><b>${state.tickets.length+126}</b><span>AI 코스 예약 건수</span></div>
   </div>
