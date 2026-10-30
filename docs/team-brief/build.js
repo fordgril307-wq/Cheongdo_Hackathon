@@ -1133,6 +1133,122 @@ async function icon(Comp, color, size = 256) {
   s.addText("평일에 노는 관광택시·행복택시의 빈자리 × 병원 가는 어르신", T({ x: 0.8, y: 3.6, w: 11.7, h: 0.6, fontSize: 20, color: "DCE6F7" }));
   s.addText("주제가 고령·이동·의료로 나오면 · 사투리 예약 + AI 합승 배차", T({ x: 0.8, y: 4.35, w: 11.7, h: 0.4, fontSize: 13, color: "C9D6EE" }));
 
+  // ===== 가안 2 재수록: 데이터 7 · 돌봄·복지
+  {
+  s = pres.addSlide({ masterName: "REPORT", sectionTitle: "아이디어" });
+  head(s, "가안 2 · 근거①", "통합돌봄 신청 3개월 새 2배, 군도 '농촌 이동지원'을 과제로 꼽음");
+  msg(s, "돌봄 수요는 늘고\n이동이 막힘", [
+    "65세 이상 47.7%(2026.7), 치매 추정 유병률 10.18%(경북 평균 9.57%), 100세 이상 21명",
+    "노인일자리 2,262명·102억 원(2026), 통합돌봄 우선 관리대상 2,806명",
+    "통합돌봄 과제(군 발표): 교통이 불편한 농촌 이동지원 확대, 관내 의료기관 참여 부족",
+  ]);
+  panel(s, 0.5, 2.95, 5.4, 3.6, "청도형 통합돌봄 신청자 (명)", "시사뉴스 2026.7.7, 매일신문 2026.10.7");
+  s.addChart(pres.charts.BAR, [
+    { name: "7월", labels: ["2026.7", "2026.10"], values: [139, 0] },
+    { name: "10월", labels: ["2026.7", "2026.10"], values: [0, 302] },
+  ], Object.assign({}, ax, { x: 0.55, y: 3.4, w: 5.3, h: 3.1, barDir: "col", barGrouping: "stacked", chartColors: [K.g, K.o], showValue: true, dataLabelPosition: "inEnd", dataLabelFormatCode: "0\"명\";;", dataLabelColor: K.white, dataLabelFontSize: 13,
+    showLegend: false, valAxisHidden: true, valAxisMinVal: 0, valAxisMaxVal: 340, barGapWidthPct: 70, catAxisLabelFontSize: 10.5 }));
+  panel(s, 6.23, 2.95, 6.6, 3.6, "돌봄·복지 현황", "시사저널 2026.6.23, 경북일보 2026.10.11, 에너지경제 2026.2.24, 데일리대구경북 2026.6.22, 더파워 2026.6.22, 아주경제 2026.8.28");
+  tbl(s, [
+    [th("항목"), th("수치"), th("기준")],
+    [tdk("노인일자리"), td("2,262명, 102억 원"), td("2026")],
+    [tdk("통합돌봄 제공"), td("349건(방문진료 20건)"), td("2026.9")],
+    [tdk("이동지원 연계"), hot("29건 — 수요 대비 부족(군 과제)"), td("2026.7")],
+    [tdk("스마트경로당"), td("화상 시스템 7곳 → 연말 30곳+ (320곳 중)"), td("2026")],
+    [tdk("노인복지 예산"), td("833억 원"), td("2026")],
+    [tdk("치매 유병률"), td("10.18% (약 1,940명 추산)"), td("2025")],
+  ], { x: 6.23, y: 3.38, w: 6.6, colW: [1.6, 3.8, 1.2], rowH: 0.44, fontSize: 10 });
+
+  }
+
+  // ===== 가안 2 재수록: 데이터 10 · 의료
+  {
+  s = pres.addSlide({ masterName: "REPORT", sectionTitle: "아이디어" });
+  head(s, "가안 2 · 근거②", "응급실은 군 전체에 1곳, 운문면 마을에선 차로 최대 약 60분");
+  msg(s, "병원은 읍에 몰려 있고\n어르신은 면에 삼", [
+    "청도군은 국립중앙의료원 지정 의료취약지(경북 13곳·전국 76곳 중 하나)",
+    "응급실은 청도대남병원 1곳(10병상), 이용 연 8,000명 이상 — 각남·각북·운문·매전엔 동네 의원 없음",
+    "운문면 마을에서 대남병원까지 차로 35~60분(추정), 가장 나이 든 면일수록 가장 멂",
+  ]);
+  panel(s, 0.5, 2.95, 7.3, 3.6, "마을별 청도대남병원까지 차량 예상 시간 (분, 추정)", "공공데이터포털 「청도군_버스정류장 현황」(2025.8.28)·「집단급식소 운영 병원」(2026.6.8) 좌표, 직선거리×1.35·시속 40km 가정");
+  const vl = ["운문 마일리", "운문 봉하리", "운문 신원리", "운문 방음리", "운문 대천리", "금천 방지리", "금천 신지리", "금천 동곡리", "각북 오산리", "각북 남산리", "매전 하평리", "풍각 송서리"];
+  const vm = [60, 55, 50, 40, 35, 35, 35, 30, 30, 30, 25, 20];
+  s.addChart(pres.charts.BAR, [
+    { name: "운문면", labels: vl, values: vm.map((v, i) => i < 5 ? v : 0) },
+    { name: "기타", labels: vl, values: vm.map((v, i) => i < 5 ? 0 : v) },
+  ], Object.assign({}, ax, { x: 0.55, y: 3.35, w: 7.2, h: 3.15, barDir: "bar", barGrouping: "stacked", chartColors: [K.o, K.g], catAxisOrientation: "maxMin", showValue: true, dataLabelPosition: "inEnd", dataLabelFormatCode: "0;;", dataLabelColor: K.white,
+    showLegend: false, valAxisHidden: true, valAxisMinVal: 0, valAxisMaxVal: 65, barGapWidthPct: 30, catAxisLabelFontSize: 9.5 }));
+  panel(s, 8.13, 2.95, 4.7, 3.6, "청도군 병원 현황", "공공데이터포털 「청도군_집단급식소 운영 병원」(2026.6.8)");
+  tbl(s, [
+    [th("병원"), th("위치"), th("응급실")],
+    [td("청도대남병원", { bold: true }), td("화양읍"), hot("10병상", { align: "center" })],
+    [td("하나병원"), td("청도읍"), td("없음", { align: "center" })],
+    [td("청도메타병원"), td("청도읍"), td("없음", { align: "center" })],
+    [td("윤성병원"), td("각북면"), td("없음", { align: "center" })],
+    [td("청도자연요양병원"), td("각북면"), td("없음", { align: "center" })],
+    [td("감꽃요양병원"), td("각북면"), td("없음", { align: "center" })],
+  ], { x: 8.13, y: 3.38, w: 4.7, colW: [2.1, 1.3, 1.3], rowH: 0.44, fontSize: 10.5 });
+  s.addNotes("의료 접근입니다. 응급실은 군 전체에 대남병원 한 곳이고, 운문면 마을에서는 차로 35분에서 60분이 걸립니다. 가장 나이 든 면이 병원에서 가장 멉니다. 시간은 정류장 좌표로 계산한 추정치입니다.");
+
+  }
+
+  // ===== 가안 2 재수록: 데이터 10-2 · 의료 인력·안전
+  {
+  s = pres.addSlide({ masterName: "REPORT", sectionTitle: "아이디어" });
+  head(s, "가안 2 · 근거③", "공중보건의 의사 5명 → 2명, 올해 충원 0명");
+  msg(s, "의사는 줄고\n어르신이 움직여야 함", [
+    "공중보건의 14명 → 8명, 그중 의사(의과) 5명 → 2명(2026.4 복무 만료), 올해 충원 계획 없음",
+    "의사 1명이 보건지소 4~5곳을 돌아가며 진료 · 각남·각북·운문·매전 4개 면엔 동네 의원 없음",
+    "[경북] 농촌 교통사고 사망률은 도시의 약 2배(10만 명당 19.4 vs 10.2), 청도는 사망자의 60% 이상이 65세 이상",
+  ]);
+  panel(s, 0.5, 2.95, 5.4, 3.6, "청도 공중보건의 (명)", "매일신문 2026.4.16");
+  s.addChart(pres.charts.BAR, [
+    { name: "만료 전", labels: ["전체", "의사(의과)"], values: [14, 5] },
+    { name: "2026.4 이후", labels: ["전체", "의사(의과)"], values: [8, 2] },
+  ], Object.assign({}, ax, { x: 0.6, y: 3.4, w: 5.2, h: 3.1, barDir: "col", barGrouping: "clustered", chartColors: [K.g, K.o], showValue: true, dataLabelPosition: "outEnd", dataLabelFormatCode: "0", dataLabelFontSize: 12,
+    showLegend: true, legendPos: "t", legendFontSize: 10, valAxisHidden: true, valAxisMinVal: 0, valAxisMaxVal: 16, barGapWidthPct: 60, catAxisLabelFontSize: 11 }));
+  panel(s, 6.23, 2.95, 6.6, 3.6, "진료 공백과 교통 안전", "매일신문 2026.4.16, 경북매일 2026.7.20, 동방일보 2026.8.13, 매일신문 2024.10.7");
+  tbl(s, [
+    [th("항목"), th("수치"), th("기준")],
+    [tdk("의사 1명 담당"), hot("보건지소 4~5곳 순회"), td("2026.4")],
+    [tdk("동네 의원 없는 면"), td("4곳 (각남·각북·운문·매전)"), td("2026.7")],
+    [tdk("소아과"), td("보건소 주 2회 · 보건지소 8곳 주 1회"), td("2026")],
+    [tdk("분만"), td("외래 산부인과만 (분만실 미확인)"), td("2026.7")],
+    [tdk("[경북] 교통사고 사망"), td("농촌 19.4 vs 도시 10.2 (10만 명당)"), td("2023")],
+    [tdk("고령 사망 비중"), td("65세 이상 60% 이상 (청도 포함 8개 시군)"), td("2023")],
+  ], { x: 6.23, y: 3.38, w: 6.6, colW: [1.9, 3.5, 1.2], rowH: 0.44, fontSize: 9.5 });
+  s.addNotes("올해 4월 공중보건의 의사가 5명에서 2명으로 줄었고 충원 계획도 없습니다. 의사 한 명이 보건지소 네다섯 곳을 돌고, 네 개 면에는 동네 의원이 없습니다. 의사가 오지 못하면 어르신이 움직여야 하는데, 농촌 교통사고 사망률은 도시의 두 배이고 청도는 사망자의 60% 이상이 어르신입니다. 효도택시가 필요한 이유입니다.");
+
+  }
+
+  // ===== 가안 2 재수록: 데이터 11 · 이동
+  {
+  s = pres.addSlide({ masterName: "REPORT", sectionTitle: "아이디어" });
+  head(s, "가안 2 · 근거④", "정류장은 508곳, 어르신 이동은 '부를 수 있느냐'의 문제");
+  msg(s, "수단은 있는데\n부르기가 어려움", [
+    "버스정류장 508곳 중 운문면은 34곳으로 9개 읍면 중 8위 — 면적 대비 띄엄띄엄",
+    "청도군은 대중교통 취약지역에 행복택시·행복버스를 운영(세부 기준은 군 확인 중)",
+    "70세 이상은 택시 호출 앱을 거의 못 씀(조사 42명 중 8명만 가능) → 전화·말로 부르는 방식이 필요",
+  ]);
+  panel(s, 0.5, 2.95, 6.6, 3.6, "읍면별 버스정류장 수 (곳)", "공공데이터포털 「경상북도 청도군_버스정류장 현황」(2025.8.28), 주소 불명확 11곳 제외");
+  const sl = ["매전면", "청도읍", "이서면", "화양읍", "풍각면", "금천면", "각남면", "운문면", "각북면"];
+  const sv = [85, 77, 65, 56, 55, 53, 41, 34, 31];
+  s.addChart(pres.charts.BAR, [
+    { name: "기타", labels: sl, values: sv.map((v, i) => i === 7 ? 0 : v) },
+    { name: "운문면", labels: sl, values: sv.map((v, i) => i === 7 ? v : 0) },
+  ], Object.assign({}, ax, { x: 0.55, y: 3.35, w: 6.5, h: 3.15, barDir: "col", barGrouping: "stacked", chartColors: [K.g, K.o], showValue: true, dataLabelPosition: "inEnd", dataLabelFormatCode: "0;;", dataLabelColor: K.white,
+    showLegend: false, valAxisHidden: true, barGapWidthPct: 40, catAxisLabelFontSize: 10 }));
+  panel(s, 7.43, 2.95, 5.4, 3.6, "이동 관련 현황", "헤럴드경제 2026.8.2, 경북매일 2021, 공공데이터 좌표 기반 추정");
+  tbl(s, [
+    [th("항목"), th("현황")],
+    [tdk("버스정류장"), td("군 전체 508곳 (2025.8.28 기준)")],
+    [tdk("행복택시·버스"), td("대중교통 취약지역 운영, 세부 기준 확인 중")],
+    [tdk("호출 앱"), hot("70세 이상 42명 중 8명만 사용 가능")],
+    [tdk("행사장→응급실"), td("운문면 대천리 기준 차로 약 35분(추정)")],
+  ], { x: 7.43, y: 3.38, w: 5.4, colW: [1.5, 3.9], rowH: 0.62, fontSize: 10.5 });
+
+  }
+
   // ===== 준비한 아이디어 1
   s = pres.addSlide({ masterName: "REPORT", sectionTitle: "아이디어" });
   head(s, "가안 2 · 개요", "청도효도택시 — 어르신 병원길, 같은 방향 이웃과 한 차로");
