@@ -52,7 +52,7 @@ async function icon(Comp, color, size = 256) {
   const th = (t, o = {}) => ({ text: t, options: Object.assign({ bold: true, color: K.white, fill: { color: K.d }, align: "center", fontSize: 11 }, o) });
   const td = (t, o = {}) => ({ text: t, options: Object.assign({ fontSize: 11 }, o) });
   const tdk = (t, o = {}) => td(t, Object.assign({ bold: true, color: K.d, fill: { color: K.pale } }, o));
-  const P = { sy: { color: K.d, fill: { color: "E3ECFA" } }, cw: { color: "1F7A6B", fill: { color: "E2F3EF" } }, hs: { color: "C25E00", fill: { color: K.oPale } } };
+  const P = { sy: { color: K.d, fill: { color: "E3ECFA" } }, cw: { color: "1F7A6B", fill: { color: "E2F3EF" } }, hs: { color: "C25E00", fill: { color: K.oPale } }, sh: { color: "7A3E9D", fill: { color: "F1E8F7" } } };
   const who = (t, k) => td(t, Object.assign({ bold: true }, P[k]));
   const hot = (t, o = {}) => td(t, Object.assign({ bold: true, color: K.o, fill: { color: K.oPale } }, o));
   const I = { users: await icon(fa.FaUsers, K.d), flag: await icon(fa.FaFlag, K.d), clock: await icon(fa.FaClock, K.d), cloud: await icon(fa.FaCloudUploadAlt, K.d), check: await icon(fa.FaCheckCircle, K.d) };
@@ -75,7 +75,7 @@ async function icon(Comp, color, size = 256) {
   s.addText("배포까지", T({ x: 10.78, y: 4.15, w: 2.0, h: 0.35, fontSize: 12, color: "DCE6F7", align: "center" }));
   s.addShape(pres.shapes.LINE, { x: 0.8, y: 6.15, w: 11.73, h: 0, line: { color: "5470A8", width: 0.75 }, objectName: "cover foot rule" });
   s.addText("2026 청도 바이브코딩 해커톤 with 해커그라운드", T({ x: 0.8, y: 6.3, w: 8, h: 0.4, fontSize: 13, color: "C9D6EE" }));
-  s.addText([{ text: "팀  ", options: { color: "C9D6EE" } }, { text: "백승유 · 김채원 · 김혜수", options: { bold: true, color: K.white } }], T({ x: 7.3, y: 6.3, w: 5.23, h: 0.4, fontSize: 13, align: "right" }));
+  s.addText([{ text: "팀  ", options: { color: "C9D6EE" } }, { text: "백승유 · 김채원 · 김혜수 · 김수희", options: { bold: true, color: K.white } }], T({ x: 7.3, y: 6.3, w: 5.23, h: 0.4, fontSize: 13, align: "right" }));
   s.addNotes("사전 회의용 팀 브리프입니다. 본문 5장은 역할·일정·준비, 뒤쪽 부록은 데이터와 참고 자료입니다.");
 
   // ===== 요약
@@ -112,14 +112,14 @@ async function icon(Comp, color, size = 256) {
     s.addText(runs, T({ x: 2.5, y: yy, w: 10.2, h, fontSize: 12, color: K.ink, valign: "middle", paraSpaceAfter: 3 }));
     yy += h + 0.1;
   });
-  s.addNotes("한 장 요약입니다. 우리 팀은 3명, 실제 개발 시간은 4시간 남짓이고, 배포 기회가 2번뿐이라는 정보가 있어 로컬에서 다 확인한 뒤 14:30과 16:00 두 번만 배포합니다. 1차 제출은 14:50, 코드 동결은 16:10입니다.");
+  s.addNotes("한 장 요약입니다. 우리 팀은 4명, 실제 개발 시간은 4시간 남짓이고, 배포 기회가 2번뿐이라는 정보가 있어 로컬에서 다 확인한 뒤 14:30과 16:00 두 번만 배포합니다. 1차 제출은 14:50, 코드 동결은 16:10입니다.");
 
   // ===== 역할
   s = pres.addSlide({ masterName: "REPORT", sectionTitle: "팀 운영" });
-  head(s, "역할", "개발 2명은 구현, 기획 1명은 기획서·검수·제출 전담");
+  head(s, "역할", "개발 2명은 구현, 기획 2명은 기획서·검수와 화면·발표로 나눔");
   msg(s, "기획서는 필수 제출물이자\n심사 기준", [
-    "개발자가 기획서까지 쓰면 구현 시간이 줄어듦 → 기획서·검수·제출은 분리해 한 명이 전담",
-    "폴더로 담당 분리: 화면 app/ = 채원, API api/ = 승유, README·기획서 = 혜수 (같은 파일 동시 수정 금지)",
+    "개발자가 기획서까지 쓰면 구현 시간이 줄어듦 → 기획 2명이 기획서·검수·제출(혜수)과 화면 시안·UX 문구·발표 PPT(수희)를 나눠 맡음",
+    "폴더로 담당 분리: 화면 app/ = 채원, API api/ = 승유, README·기획서 = 혜수, 발표 자료 decks/ = 수희 (같은 파일 동시 수정 금지)",
     "배포는 팀장만 실행, 30분마다 한 줄 공유(끝난 것 / 막힌 것), 15분 넘게 막히면 현장 멘토에게 바로 질문",
     "제출 양식의 팀 이름·저장소 주소·GitHub ID는 팀 등록 때와 글자 하나까지 동일하게",
   ]);
@@ -128,9 +128,28 @@ async function icon(Comp, color, size = 256) {
     [th("담당"), th("10:00~11:00"), th("11:00~13:00"), th("14:00~16:10"), th("마감")],
     [who("백승유\n팀장·백엔드", "sy"), td("아이디어 최종 결정, 기술 구조"), td("저장소·배포 파이프라인, API·AI 연결"), td("배포 ①(14:30)·②(16:00) 실행\n검수 지적 대응"), td("코드 동결 판단")],
     [who("김채원\n프론트엔드", "cw"), td("화면 흐름 함께 설계"), td("화면 뼈대·핵심 화면 구현"), td("API 연결, 디자인 다듬기"), td("화면 최종 확인")],
-    [who("김혜수\n기획·PM", "hs"), td("문제 정의·근거 숫자\n화면 흐름·문구"), td("기획서 작성, 데이터 준비"), td("배포 전 체크리스트, 휴대폰 QA, README"), td("1·2차 제출 체크리스트")],
-  ], { x: 0.5, y: 3.42, w: 12.33, colW: [1.75, 2.55, 2.75, 3.13, 2.15], rowH: [0.42, 0.85, 0.85, 0.85], fontSize: 10.5 });
-  s.addNotes("역할입니다. 기획서가 필수 제출물이자 심사 기준이라, 개발 두 명은 구현에 집중하고 기획서·검수·제출은 제가 전담하겠습니다. 폴더로 담당을 나눠 충돌을 막고, 배포는 팀장님만 실행합니다.");
+    [who("김혜수\n기획·PM", "hs"), td("문제 정의·근거 숫자"), td("기획서 작성, 데이터 준비"), td("배포 전 체크리스트, 휴대폰 QA, README"), td("1·2차 제출 체크리스트")],
+    [who("김수희\n기획·UX·발표", "sh"), td("사용자 시나리오·화면 흐름"), td("화면 시안·UX 문구, 발표 PPT 뼈대"), td("시연 시나리오, 발표 자료 완성"), td("발표·시연 리허설")],
+  ], { x: 0.5, y: 3.42, w: 12.33, colW: [1.75, 2.55, 2.75, 3.13, 2.15], rowH: [0.4, 0.72, 0.72, 0.72, 0.72], fontSize: 10.5 });
+  s.addNotes("역할입니다. 기획서가 필수 제출물이자 심사 기준이라, 개발 두 명은 구현에 집중하고, 기획서·검수·제출은 제가, 화면 시안과 UX 문구·발표 자료는 수희 님이 맡습니다. 폴더로 담당을 나눠 충돌을 막고, 배포는 팀장님만 실행합니다.");
+
+  // ===== 팀 구성
+  s = pres.addSlide({ masterName: "REPORT", sectionTitle: "팀 운영" });
+  head(s, "팀 구성", "4명 — 개발 2명 + 기획 2명, 새로 합류한 김수희");
+  msg(s, "기획을 둘로 나눠\n개발 시간을 지킴", [
+    "개발: 백승유(팀장·백엔드), 김채원(프론트엔드) — 구현과 배포에 집중",
+    "기획: 김혜수(PM·기획서·제출), 김수희(화면 시안·UX 문구·발표) — 문서와 화면을 나눠 맡음",
+    "팀 공유는 노션 페이지로 통일, 브리프 PDF·코드는 GitHub 저장소",
+  ]);
+  panel(s, 0.5, 2.95, 12.33, 3.6, "팀원", null);
+  tbl(s, [
+    [th("이름"), th("역할"), th("자신 있는 분야"), th("당일 맡는 일")],
+    [who("백승유", "sy"), td("팀장 · 백엔드"), td("API·AI 연결, 배포"), td("저장소·배포, API 구현, 코드 동결 판단")],
+    [who("김채원", "cw"), td("프론트엔드"), td("화면 구현"), td("화면 뼈대·핵심 화면, API 연결")],
+    [who("김혜수", "hs"), td("기획 · PM"), td("문제 정의, 기획서, 제출 관리"), td("기획서·README, QA, 1·2차 제출")],
+    [who("김수희", "sh"), td("기획 · UX · 발표"), td("기획, PPT 제작, 디자인 일부 지원"), td("화면 시안·UX 문구, 발표 자료·시연 리허설")],
+  ], { x: 0.5, y: 3.38, w: 12.33, colW: [1.5, 2.4, 3.6, 4.83], rowH: [0.4, 0.62, 0.62, 0.62, 0.62], fontSize: 10.5 });
+  s.addNotes("팀은 네 명입니다. 개발은 승유 님과 채원 님, 기획은 저와 새로 합류한 수희 님입니다. 수희 님은 기획과 PPT에 강해 화면 시안과 발표를 맡습니다.");
 
   // ===== 시간표
   s = pres.addSlide({ masterName: "REPORT", sectionTitle: "팀 운영" });
